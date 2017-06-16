@@ -1,4 +1,5 @@
 #include <osvr/ClientKit/InterfaceStateC.h>
+#include <osvr/Util/ImagingReportTypesC.h>
 #ifndef GLOBAL_STATES_OSVR
 #define GLOBAL_STATES_OSVR
 namespace global_states {

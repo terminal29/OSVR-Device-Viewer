@@ -70,70 +70,99 @@ void OSVR_Controller_Viewer::set_osvr_ctx_ptr(osvr::clientkit::ClientContext* ct
 	OSVR_Controller_Viewer::ctx_lock = ctx_lock;
 }
 
+float truncate(float val, int nums) {
+	return round((val*pow(10, nums))) / pow(10, nums);
+}
+
 void OSVR_Controller_Viewer::update_details_box() {
 
-	QTextBrowser* text_browser = ui.textBrowser;
-	std::stringstream html_data;
-	html_data << "<style> .con{width:100%;table-size:fixed;} table tr td{max-width:50%;word-break:break-all;} .f{height: 40px; font-size:7pt;} .n{ font-weight:bold;} .c{  }</style>";
-	html_data << "<table class='con' cellspacing='0' cellpadding='0' width='100%'>";
+	std::stringstream d_str;
+	d_str.precision(3);
+
+	d_str << (global_states::btn_s == OSVR_BUTTON_PRESSED ? "down" : "up");
+	ui.btn_lbl_i->setText(d_str.str().c_str());
+	d_str.str("");
 	
-	html_data << "<tr class='f'><td width='50%' class='n c'>Button</td><td width='50%' class='c'>" << (global_states::btn_s ==  OSVR_BUTTON_PRESSED ? "Down" : "Up") << "</td></tr>";
+	d_str << global_states::alg_s;
+	ui.alg_lbl_i->setText(d_str.str().c_str());
+	d_str.str("");
+
+	d_str << '[' << truncate(global_states::p_s.translation.data[0], 2) << ',' << truncate(global_states::p_s.translation.data[1], 2) << ',' << truncate(global_states::p_s.translation.data[2], 2) << ']';
+	ui.p_t_lbl_i->setText(d_str.str().c_str());
+	d_str.str("");
+
+	d_str << '[' << truncate(global_states::p_s.rotation.data[0], 2) << ',' << truncate(global_states::p_s.rotation.data[1], 2) << ',' << truncate(global_states::p_s.rotation.data[2], 2) << ',' << truncate(global_states::p_s.rotation.data[3], 2) << ']';
+	ui.p_r_lbl_i->setText(d_str.str().c_str());
+	d_str.str("");
+
+	d_str << '[' << truncate(global_states::v_s.angularVelocity.dt, 2) << "],[" << truncate(global_states::v_s.angularVelocity.incrementalRotation.data[0], 2) << ',' << truncate(global_states::v_s.angularVelocity.incrementalRotation.data[1], 2) << ',' << truncate(global_states::v_s.angularVelocity.incrementalRotation.data[2], 2) << ',' << truncate(global_states::v_s.angularVelocity.incrementalRotation.data[3], 2) << ']';
+	ui.v_a_lbl_i->setText(d_str.str().c_str());
+	d_str.str("");
+
+	d_str << '[' << truncate(global_states::v_s.linearVelocity.data[0], 2) << ',' << truncate(global_states::v_s.linearVelocity.data[1], 2) << ',' << truncate(global_states::v_s.linearVelocity.data[2], 2) << ']';
+	ui.v_l_lbl_i->setText(d_str.str().c_str());
+	d_str.str("");
+
+	d_str << '[' << truncate(global_states::acc_s.angularAcceleration.dt, 2) << "],[" << truncate(global_states::acc_s.angularAcceleration.incrementalRotation.data[0], 2) << ',' << truncate(global_states::acc_s.angularAcceleration.incrementalRotation.data[1], 2) << ',' << truncate(global_states::acc_s.angularAcceleration.incrementalRotation.data[2], 2) << ',' << truncate(global_states::acc_s.angularAcceleration.incrementalRotation.data[3], 2) << ']';
+	ui.a_a_lbl_i->setText(d_str.str().c_str());
+	d_str.str("");
+
+	d_str << '[' << truncate(global_states::acc_s.linearAcceleration.data[0], 2) << ',' << truncate(global_states::acc_s.linearAcceleration.data[1], 2) << ',' << truncate(global_states::acc_s.linearAcceleration.data[2], 2) << ']';
+	ui.a_l_lbl_i->setText(d_str.str().c_str());
+	d_str.str("");
+
+	d_str << '[' << truncate(global_states::dir_s.data[0], 2) << ',' << truncate(global_states::dir_s.data[1], 2) << ',' << truncate(global_states::dir_s.data[2], 2) << ']';
+	ui.dir_lbl_i->setText(d_str.str().c_str());
+	d_str.str("");
+
+	d_str << '[' << truncate(global_states::l2d_s.data[0], 2) << ',' << truncate(global_states::l2d_s.data[1], 2) << ']';
+	ui.loc_lbl_i->setText(d_str.str().c_str());
+	d_str.str("");
 	
-	html_data << "<tr class='f'><td width='50%' class='n c'>Analog</td><td width='50%' class='c'>" << global_states::alg_s << "</td></tr>";
+	d_str << '[' << truncate(global_states::et2d_s.data[0], 2) << ',' << truncate(global_states::et2d_s.data[1], 2) << ']';
+	ui.et2d_lbl_i->setText(d_str.str().c_str());
+	d_str.str("");
 
-	html_data << "<tr class='f'><td width='50%' class='n c'>Pose</td><td width='50%' class='c'></td></tr>";
-
-	html_data << "<tr class='f'><td width='50%' class='c'>&nbsp;Translation</td><td width='50%' class='c'> [" << std::setprecision(3) << global_states::p_s.translation.data[0] << ',' << global_states::p_s.translation.data[1] << ',' << global_states::p_s.translation.data[2] << std::setprecision(6) << "]</td></tr>";
-
-	html_data << "<tr class='f'><td width='50%' class='c'>&nbsp;Rotation</td><td width='50%' class='c'> [" << std::setprecision(3) << global_states::p_s.rotation.data[0] << ',' << global_states::p_s.rotation.data[1] << ',' << global_states::p_s.rotation.data[2] << ',' << global_states::p_s.rotation.data[3] << std::setprecision(6) <<  "]</td></tr>";
-
-	html_data << "<tr class='f'><td width='50%' class='n c'>Velocity</td><td width='50%' class='c'></td></tr>";
-
-	html_data << "<tr class='f'><td width='50%' class='c'>&nbsp;Angular</td><td width='50%' class='c'>[" << std::setprecision(3) << global_states::v_s.angularVelocity.dt << "],[" << global_states::v_s.angularVelocity.incrementalRotation.data[0] << ',' << global_states::v_s.angularVelocity.incrementalRotation.data[1] << ',' << global_states::v_s.angularVelocity.incrementalRotation.data[2] << ',' << global_states::v_s.angularVelocity.incrementalRotation.data[3] << std::setprecision(6) << "]</td></tr>";
-
-	html_data << "<tr class='f'><td width='50%' class='c'>&nbsp;Linear</td><td width='50%' class='c'>[" << std::setprecision(3) << global_states::v_s.linearVelocity.data[0] << ',' << global_states::v_s.linearVelocity.data[1] << ',' << global_states::v_s.linearVelocity.data[2] << "]</td></tr>";
-
-	html_data << "<tr class='f'><td width='50%' class='n c'>Acceleration</td><td width='50%' class='c'></td></tr>";
-
-	html_data << "<tr class='f'><td width='50%' class='c'>&nbsp;Angular</td><td width='50%' class='c'>[" << std::setprecision(3) << global_states::acc_s.angularAcceleration.dt << "],[" << global_states::acc_s.angularAcceleration.incrementalRotation.data[0] << ',' << global_states::acc_s.angularAcceleration.incrementalRotation.data[1] << ',' << global_states::acc_s.angularAcceleration.incrementalRotation.data[2] << ',' << global_states::acc_s.angularAcceleration.incrementalRotation.data[3] << std::setprecision(6) << "]</td></tr>";
-
-	html_data << "<tr class='f'><td width='50%' class='c'>&nbsp;Linear</td><td width='50%' class='c'>[" << std::setprecision(3) << global_states::acc_s.linearAcceleration.data[0] << ',' << global_states::acc_s.linearAcceleration.data[1] << ',' << global_states::acc_s.linearAcceleration.data[2] << std::setprecision(6) << "]</td></tr>";
+	d_str << '[' << truncate(global_states::et3d_s.basePoint.data[0], 2) << ',' << truncate(global_states::et3d_s.basePoint.data[1], 2) << ',' << truncate(global_states::et3d_s.basePoint.data[1], 2) << ']';
+	ui.et3d_bp_lbl_i->setText(d_str.str().c_str());
+	d_str.str("");
 	
-	html_data << "<tr class='f'><td width='50%' class='n c'>Direction</td><td width='50%' class='c'>[" << std::setprecision(3) << global_states::dir_s.data[0] << ',' << global_states::dir_s.data[1] << ',' << global_states::dir_s.data[2] << std::setprecision(6) <<  "]</td></tr>";
+	d_str << '[' << truncate(global_states::et3d_s.direction.data[0], 2) << ',' << truncate(global_states::et3d_s.direction.data[1], 2) << ',' << truncate(global_states::et3d_s.direction.data[1], 2) << ']';
+	ui.et3d_dir_lbl_i->setText(d_str.str().c_str());
+	d_str.str("");
 
-	html_data << "<tr class='f'><td width='50%' class='n c'>Location</td><td width='50%' class='c'>[" << std::setprecision(3) << global_states::l2d_s.data[0] << ',' << global_states::l2d_s.data[1] << std::setprecision(6) << "]</td></tr>";
+	d_str << (global_states::etb_s == OSVR_EYE_BLINK ? "closed" : "open");
+	ui.eb_lbl_i->setText(d_str.str().c_str());
+	d_str.str("");
 
-	html_data << "<tr class='f'><td width='50%' class='n c'>Eye Tracker 2D</td><td width='50%' class='c'>[" << std::setprecision(3) << global_states::et2d_s.data[0] << ',' << global_states::et2d_s.data[1] << std::setprecision(6) << "]</td></tr>";
+	d_str << global_states::img_s.metadata.width;
+	ui.img_w_lbl_i->setText(d_str.str().c_str());
+	d_str.str("");
 
-	html_data << "<tr class='f'><td width='50%' class='n c'>Eye Tracker 3D</td><td width='50%' class='c'></td></tr>";
+	d_str << global_states::img_s.metadata.height;
+	ui.img_h_lbl_i->setText(d_str.str().c_str());
+	d_str.str("");
 
-	html_data << "<tr class='f'><td width='50%' class='c'>&nbsp;Base Point</td><td width='50%' class='c'>[" << std::setprecision(3) << global_states::et3d_s.basePoint.data[0] << ',' << global_states::et3d_s.basePoint.data[1] << ',' << global_states::et3d_s.basePoint.data[2] << std::setprecision(6) << "]</td></tr>";
+	d_str << (int)global_states::img_s.metadata.channels;
+	ui.img_c_lbl_i->setText(d_str.str().c_str());
+	d_str.str("");
 
-	html_data << "<tr class='f'><td width='50%' class='c'>&nbsp;Direction</td><td width='50%' class='c'>[" << std::setprecision(3) << global_states::et3d_s.direction.data[0] << ',' << global_states::et3d_s.direction.data[1] << ',' << global_states::et3d_s.direction.data[2] << std::setprecision(6) << "]</td></tr>";
+	d_str << (int)global_states::img_s.metadata.depth;
+	ui.img_d_lbl_i->setText(d_str.str().c_str());
+	d_str.str("");
 
-	html_data << "<tr class='f'><td width='50%' class='n c'>Eye Blink</td><td width='50%' class='c'>" << (global_states::etb_s == OSVR_BUTTON_PRESSED ? "Closed" : "Open") << "</td></tr>";
+	d_str << (global_states::img_s.metadata.type == OSVR_IVT_UNSIGNED_INT ? "unsigned int" : (global_states::img_s.metadata.type == OSVR_IVT_SIGNED_INT ? "int" : "float"));
+	ui.img_t_lbl_i->setText(d_str.str().c_str());
+	d_str.str("");
 
-	html_data << "<tr class='f'><td width='50%' class='n c'>Imaging</td><td width='50%' class='c'></td></tr>";
+	d_str << '[' << truncate(global_states::npos_s.data[0], 2) << ',' << truncate(global_states::npos_s.data[1], 2) << ']';
+	ui.nav_p_lbl_i->setText(d_str.str().c_str());
+	d_str.str("");
 
-	html_data << "<tr class='f'><td width='50%' class='c'>&nbsp;Width</td><td width='50%' class='c'>" << global_states::img_s.metadata.width << "</td></tr>";
-	
-	html_data << "<tr class='f'><td width='50%' class='c'>&nbsp;Height</td><td width='50%' class='c'>" << global_states::img_s.metadata.height << "</td></tr>";
+	d_str << '[' << truncate(global_states::nvel_s.data[0], 2) << ',' << truncate(global_states::nvel_s.data[1], 2) << ']';
+	ui.nav_v_lbl_i->setText(d_str.str().c_str());
+	d_str.str("");
 
-	html_data << "<tr class='f'><td width='50%' class='c'>&nbsp;Channels</td><td width='50%' class='c'>" << (int)global_states::img_s.metadata.channels << "</td></tr>";
-	
-	html_data << "<tr class='f'><td width='50%' class='c'>&nbsp;Depth</td><td width='50%' class='c'>" << (int)global_states::img_s.metadata.depth << "</td></tr>";
-	
-	html_data << "<tr class='f'><td width='50%' class='c'>&nbsp;Type</td><td width='50%' class='c'>" << (global_states::img_s.metadata.type == OSVR_IVT_UNSIGNED_INT ? "unsigned int" : (global_states::img_s.metadata.type == OSVR_IVT_SIGNED_INT ? "int" : "float")) << "</td></tr>";
-	
-	html_data << "<tr class='f'><td width='50%' class='n c'>Navigation</td><td width='50%' class='c'></td></tr>";
-
-	html_data << "<tr class='f'><td width='50%' class='c'>&nbsp;Position</td><td width='50%' class='c'>[" << std::setprecision(3) << global_states::npos_s.data[0] << ',' << global_states::npos_s.data[1] << std::setprecision(6) << "]</td></tr>";
-
-	html_data << "<tr class='f'><td width='50%' class='c'>&nbsp;Velocity</td><td width='50%' class='c'>[" << std::setprecision(3) << global_states::nvel_s.data[0] << ',' << global_states::nvel_s.data[1] << std::setprecision(6) << "]</td></tr>";
-
-	html_data << "</table>";
-
-	text_browser->setHtml(html_data.str().c_str());
 }
 
 
