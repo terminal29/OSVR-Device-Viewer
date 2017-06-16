@@ -2,18 +2,17 @@
 #define OSVR_CONTROLLER_VIEWER_H
 
 #include <QtWidgets/QMainWindow>
+#include <osvr/ClientKit/Context.h>
+#include <osvr/ClientKit/Interface.h>
+#include <osvr/Util/ClientReportTypesC.h>
 #include "ui_osvr_controller_viewer.h"
+#include "global_states.h"
 #include <string>
 #include <sstream>
-#include <osvr/clientkit/context.h>
-#include <osvr/clientkit/ClientKit.h>
-#include <osvr/ClientKit/Interface.h>
-#include <osvr/common/clientContext.h>
-#include <osvr/common/ClientInterfacePtr.h>
-#include <osvr/common/ClientInterface.h>
-#include <osvr/Common/ReportTypes.h>
+#include <iomanip>
 #include <mutex>
 #include <qtimer.h>
+#include <iostream>
 
 class OSVR_Controller_Viewer : public QMainWindow
 {
@@ -30,8 +29,12 @@ private:
 	bool keep_updating = false;
 	bool last_thread_running = false;
 	osvr::clientkit::ClientContext* ctx = nullptr;
+	bool clear_old_interface = false;
+	osvr::clientkit::Interface osvr_interface;
 	std::mutex* ctx_lock = nullptr;
 	QTreeWidgetItem last_tree_item;
+
+	
 
 public slots:
 void update_interface_details(QTreeWidgetItem* tree_elem_ptr);

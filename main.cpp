@@ -33,6 +33,8 @@ std::mutex ctx_lock;
 
 osvr::common::PathTree osvr_path_tree;
 
+osvr::clientkit::Interface* current_interface = nullptr;
+
 bool thread_close = false;
 bool connected = false;
 
@@ -71,7 +73,7 @@ void osvr_connect() {
 		ctx.update();
 		update_path_values();
 		ctx_lock.unlock();
-		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	}
 }
 

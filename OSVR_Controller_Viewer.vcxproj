@@ -101,7 +101,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;C:\Users\Jacob\Documents\GitHub\PSMove_OSVR_Connector\libs\OSVR-Core-Snapshot-v0.6-1935-ga2cba4b6-build281-vs12-64bit\lib;C:\boost\boost_1_63_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;C:\Users\Jacob\Documents\GitHub\PSMove_OSVR_Connector\libs\OSVR-Core-Snapshot-v0.6-1935-ga2cba4b6-build281-vs12-64bit\lib\osvrCommond.lib;C:\Users\Jacob\Documents\GitHub\PSMove_OSVR_Connector\libs\OSVR-Core-Snapshot-v0.6-1935-ga2cba4b6-build281-vs12-64bit\lib\osvrClientKitd.lib;C:\Users\Jacob\Documents\GitHub\PSMove_OSVR_Connector\libs\OSVR-Core-Snapshot-v0.6-1935-ga2cba4b6-build281-vs12-64bit\lib\osvrClientd.lib;C:\Users\Jacob\Documents\GitHub\PSMove_OSVR_Connector\libs\OSVR-Core-Snapshot-v0.6-1935-ga2cba4b6-build281-vs12-64bit\lib\osvrUtild.lib;C:\Users\Jacob\Documents\GitHub\PSMove_OSVR_Connector\libs\OSVR-Core-Snapshot-v0.6-1935-ga2cba4b6-build281-vs12-64bit\lib\osvrPluginKitd.lib;C:\Users\Jacob\Documents\GitHub\PSMove_OSVR_Connector\libs\OSVR-Core-Snapshot-v0.6-1935-ga2cba4b6-build281-vs12-64bit\lib\osvrPluginHostd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;C:\Users\Jacob\Documents\GitHub\PSMove_OSVR_Connector\libs\OSVR-Core-Snapshot-v0.6-1935-ga2cba4b6-build281-vs12-64bit\lib\osvrCommond.lib;C:\Users\Jacob\Documents\GitHub\PSMove_OSVR_Connector\libs\OSVR-Core-Snapshot-v0.6-1935-ga2cba4b6-build281-vs12-64bit\lib\osvrClientKitd.lib;C:\Users\Jacob\Documents\GitHub\PSMove_OSVR_Connector\libs\OSVR-Core-Snapshot-v0.6-1935-ga2cba4b6-build281-vs12-64bit\lib\osvrClientd.lib;C:\Users\Jacob\Documents\GitHub\PSMove_OSVR_Connector\libs\OSVR-Core-Snapshot-v0.6-1935-ga2cba4b6-build281-vs12-64bit\lib\osvrUtild.lib;C:\Users\Jacob\Documents\GitHub\PSMove_OSVR_Connector\libs\OSVR-Core-Snapshot-v0.6-1935-ga2cba4b6-build281-vs12-64bit\lib\osvrPluginKitd.lib;C:\Users\Jacob\Documents\GitHub\PSMove_OSVR_Connector\libs\OSVR-Core-Snapshot-v0.6-1935-ga2cba4b6-build281-vs12-64bit\lib\osvrPluginHostd.lib;C:\Users\Jacob\Documents\GitHub\PSMove_OSVR_Connector\libs\OSVR-Core-Snapshot-v0.6-1935-ga2cba4b6-build281-vs12-64bit\lib\osvrConnectiond.lib;C:\Users\Jacob\Documents\GitHub\PSMove_OSVR_Connector\libs\OSVR-Core-Snapshot-v0.6-1935-ga2cba4b6-build281-vs12-64bit\lib\osvrServerd.lib;C:\Users\Jacob\Documents\GitHub\PSMove_OSVR_Connector\libs\OSVR-Core-Snapshot-v0.6-1935-ga2cba4b6-build281-vs12-64bit\lib\osvrVRPNServerd.lib;C:\Users\Jacob\Documents\GitHub\PSMove_OSVR_Connector\libs\OSVR-Core-Snapshot-v0.6-1935-ga2cba4b6-build281-vs12-64bit\lib\osvrAnalysisPluginKitd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -221,6 +221,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_osvr_controller_viewer.h" />
+    <ClInclude Include="global_states.h" />
     <ClInclude Include="interface_element.h" />
     <ClInclude Include="path_tree_iterator.h" />
     <CustomBuild Include="QPathViewer.h">
