@@ -9,7 +9,7 @@ HEADERS += global_states.h \
            interface_element.h \
            osvr_controller_viewer.h \
            path_tree_iterator.h \
-           QPathViewer.h \
+           qpathviewer.h \
            QRefreshButton.h \
            GeneratedFiles/ui_osvr_controller_viewer.h
 FORMS += osvr_controller_viewer.ui

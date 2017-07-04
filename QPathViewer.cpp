@@ -1,4 +1,4 @@
-#include "QPathViewer.h"
+#include "qpathviewer.h"
 
 
 
