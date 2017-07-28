@@ -1,11 +1,10 @@
 #pragma once
-#include "C:\Qt\Qt5.6.2\5.6\msvc2015_64\include\QtWidgets\qtreewidget.h"
+#include <QtWidgets/qtreewidget.h>
 #include <vector>
 #include <mutex>
 #include <utility>
 #include <string>
 #include <osvr/ClientKit/ClientKit.h>
-#include <Windows.h>
 #include <sstream>
 #include "interface_element.h"
 

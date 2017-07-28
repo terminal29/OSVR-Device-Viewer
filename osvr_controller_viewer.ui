@@ -20,7 +20,7 @@
    <property name="mouseTracking">
     <bool>false</bool>
    </property>
-   <widget class="QTreeWidget" name="pathTree">
+   <widget class="QPathViewer" name="pathTree">
     <property name="geometry">
      <rect>
       <x>10</x>

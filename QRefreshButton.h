@@ -1,6 +1,6 @@
 #pragma once
-#include "C:\Qt\Qt5.6.2\5.6\msvc2015_64\include\QtWidgets\qpushbutton.h"
-#include "QPathViewer.h"
+#include <QtWidgets/qpushbutton.h>
+#include "qpathviewer.h"
 class QRefreshButton : public QPushButton
 {
 	Q_OBJECT

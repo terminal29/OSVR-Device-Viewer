@@ -18,10 +18,8 @@
 #include <QtWidgets/QListView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QWidget>
-#include <QPathViewer.h>
-#include <QRefreshButton.h>
+#include <qpathviewer.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -30,7 +28,7 @@ class Ui_OSVR_Controller_ViewerClass
 public:
     QWidget *centralWidget;
     QPathViewer *pathTree;
-    QRefreshButton *refreshButton;
+    QPushButton *refreshButton;
     QLabel *btn_lbl;
     QListView *listView;
     QLabel *alg_lbl;
@@ -91,9 +89,6 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         centralWidget->setMouseTracking(false);
         pathTree = new QPathViewer(centralWidget);
-        QTreeWidgetItem *__qtreewidgetitem = new QTreeWidgetItem();
-        __qtreewidgetitem->setText(0, QStringLiteral("Interface Type"));
-        pathTree->setHeaderItem(__qtreewidgetitem);
         pathTree->setObjectName(QStringLiteral("pathTree"));
         pathTree->setGeometry(QRect(10, 10, 501, 441));
         pathTree->setAutoFillBackground(false);
@@ -104,8 +99,7 @@ public:
         pathTree->setItemsExpandable(false);
         pathTree->setExpandsOnDoubleClick(false);
         pathTree->setColumnCount(2);
-        pathTree->header()->setVisible(true);
-        refreshButton = new QRefreshButton(centralWidget);
+        refreshButton = new QPushButton(centralWidget);
         refreshButton->setObjectName(QStringLiteral("refreshButton"));
         refreshButton->setGeometry(QRect(520, 420, 281, 31));
         btn_lbl = new QLabel(centralWidget);
@@ -316,9 +310,7 @@ public:
 
     void retranslateUi(QMainWindow *OSVR_Controller_ViewerClass)
     {
-        OSVR_Controller_ViewerClass->setWindowTitle(QApplication::translate("OSVR_Controller_ViewerClass", "OSVR Device Viewer", 0));
-        QTreeWidgetItem *___qtreewidgetitem = pathTree->headerItem();
-        ___qtreewidgetitem->setText(1, QApplication::translate("OSVR_Controller_ViewerClass", "Full Path", 0));
+        OSVR_Controller_ViewerClass->setWindowTitle(QApplication::translate("OSVR_Controller_ViewerClass", "OSVR Controller Viewer", 0));
         refreshButton->setText(QApplication::translate("OSVR_Controller_ViewerClass", "Refresh Paths", 0));
         btn_lbl->setText(QApplication::translate("OSVR_Controller_ViewerClass", "<html><head/><body><p><span style=\" font-weight:600;\">Button</span></p></body></html>", 0));
         alg_lbl->setText(QApplication::translate("OSVR_Controller_ViewerClass", "<html><head/><body><p><span style=\" font-weight:600;\">Analog</span></p></body></html>", 0));

@@ -14,7 +14,6 @@
 #include <osvr/ClientKit/Interface.h>
 #include <osvr/Util/TreeTraversalVisitor.h>
 #include <QtWidgets/QApplication>
-#include <Windows.h>
 
 // 1st Party Includes
 #include "osvr_controller_viewer.h"
